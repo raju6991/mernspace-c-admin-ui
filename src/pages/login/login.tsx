@@ -11,19 +11,33 @@ import {
 } from "antd";
 import { LockFilled, LockOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../../components/icons/Logo";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../../http/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { login, self } from "../../http/api";
 import type { Credentials } from "../../types";
+import { useUserAuthStore } from "../../store.ts";
 const loginUser = async (credentials: Credentials) => {
   const { data } = await login(credentials);
   return data;
 };
+
+const getSelf = async () => {
+  const { data } = await self();
+  return data;
+};
 const LoginPage = () => {
+  const { setUser } = useUserAuthStore();
+  const { refetch } = useQuery({
+    queryKey: ["self"],
+    queryFn: getSelf,
+    enabled: false,
+  });
+
   const { mutate, isPending, isError } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
     onSuccess: async () => {
-      console.log("Login Successful!");
+      const selfDataPromise = await refetch();
+      setUser(selfDataPromise.data);
     },
   });
   return (
@@ -70,7 +84,6 @@ const LoginPage = () => {
               }}
               onFinish={(values) => {
                 mutate({ email: values.username, password: values.password });
-                console.log(values);
               }}
             >
               <Form.Item
