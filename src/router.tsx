@@ -5,29 +5,36 @@ import LoginPage from "./pages/login/login";
 import Dashboard from "./layouts/Dashboard";
 import NonAuth from "./layouts/NonAuth";
 import Categories from "./pages/Categories";
+import Root from "./layouts/Root";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: <Root />,
     children: [
       {
-        path: "",
-        element: <HomePage />,
+        path: "/",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "",
+            element: <HomePage />,
+          },
+          {
+            path: "/categories",
+            element: <Categories />,
+          },
+        ],
       },
       {
-        path: "/categories",
-        element: <Categories />,
-      },
-    ],
-  },
-  {
-    path: "/auth",
-    element: <NonAuth />,
-    children: [
-      {
-        path: "login",
-        element: <LoginPage />,
+        path: "/auth",
+        element: <NonAuth />,
+        children: [
+          {
+            path: "login",
+            element: <LoginPage />,
+          },
+        ],
       },
     ],
   },
