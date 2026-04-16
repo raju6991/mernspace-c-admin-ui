@@ -16,7 +16,7 @@ import {
   Space,
   theme,
 } from "antd";
-import { useState } from "react";
+import { use, useState } from "react";
 import UserIcon from "../components/icons/UserIcon";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../http/api";
@@ -98,7 +98,15 @@ const Dashboard = () => {
               }}
             >
               <Flex gap="medium" align="start" justify="space-between">
-                <Badge text="Global" status="success" color="#faad14" />
+                <Badge
+                  text={
+                    user.role === "admin"
+                      ? "You are an admin"
+                      : user.tenant?.name
+                  }
+                  status="success"
+                  color="#faad14"
+                />
                 <Space size={16}>
                   <Badge dot={true}>
                     <BellFilled />
