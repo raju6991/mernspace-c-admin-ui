@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "../../store";
 import { useState } from "react";
 import { getTenants } from "../../http/api";
-import UsersFilter from "../users/UsersFilter";
 import TenantsFilter from "./TenantsFilter";
 const columns = [
   {
