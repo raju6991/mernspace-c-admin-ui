@@ -1,7 +1,6 @@
 import {
   Card,
   Col,
-  List,
   Row,
   Skeleton,
   Space,
@@ -110,33 +109,40 @@ function HomePage() {
             variant="borderless"
             title={<CardTitle title="Recent orders" PrefixIcon={BasketIcon} />}
           >
-            <List
-              className="demo-loadmore-list"
-              loading={false}
-              itemLayout="horizontal"
-              loadMore={true}
-              dataSource={list}
-              renderItem={(item) => (
-                <List.Item>
-                  <Skeleton avatar title={false} loading={item.loading} active>
-                    <List.Item.Meta
-                      title={
+            <Space
+              orientation="vertical"
+              size="middle"
+              style={{ width: "100%" }}
+            >
+              {list.map((item, index) => (
+                <Skeleton
+                  key={`order-${index}`}
+                  avatar
+                  title={false}
+                  loading={item.loading}
+                  active
+                >
+                  <Row
+                    align="middle"
+                    justify="space-between"
+                    style={{ gap: 16 }}
+                  >
+                    <Col flex="auto">
+                      <div>
                         <a href="https://ant.design">{item.OrderSummary}</a>
-                      }
-                      description={item.address}
-                    />
-                    <Row style={{ flex: 1 }} justify="space-between">
-                      <Col>
-                        <Text strong>${item.amount}</Text>
-                      </Col>
-                      <Col>
-                        <Tag color="volcano">{item.status}</Tag>
-                      </Col>
-                    </Row>
-                  </Skeleton>
-                </List.Item>
-              )}
-            />
+                        <div>{item.address}</div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <Text strong>${item.amount}</Text>
+                      <Tag color="volcano" style={{ marginLeft: 8 }}>
+                        {item.status}
+                      </Tag>
+                    </Col>
+                  </Row>
+                </Skeleton>
+              ))}
+            </Space>
             <div style={{ marginTop: 20 }}>
               <Button type="link">
                 <Link to="/orders">See all orders</Link>
