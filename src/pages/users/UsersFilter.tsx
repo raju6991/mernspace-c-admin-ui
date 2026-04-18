@@ -1,17 +1,26 @@
 import { Button, Card, Col, Input, Row, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-const UsersFilter = () => {
+
+type UsersFilterProps = {
+  onFilterChange: (filterName: string, filterValue: string) => void;
+};
+const UsersFilter = ({ onFilterChange }: UsersFilterProps) => {
   return (
     <Card>
       <Row justify="space-between">
         <Col span={16}>
           <Row gutter={20}>
             <Col>
-              <Input.Search placeholder="Search users..." />
+              <Input.Search
+                allowClear={true}
+                placeholder="Search users..."
+                onChange={(e) => onFilterChange("searchFilter", e.target.value)}
+              />
             </Col>
             <Col span={8}>
               <Select
                 allowClear={true}
+                onChange={(value) => onFilterChange("roleFilter", value || "")}
                 placeholder="Select role"
                 style={{ width: "100%" }}
                 options={[
@@ -23,6 +32,9 @@ const UsersFilter = () => {
             </Col>
             <Col span={8}>
               <Select
+                onChange={(value) =>
+                  onFilterChange("statusFilter", value || "")
+                }
                 allowClear={true}
                 placeholder="Select status"
                 style={{ width: "100%" }}
