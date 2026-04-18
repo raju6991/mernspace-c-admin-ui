@@ -3,8 +3,9 @@ import { PlusOutlined } from "@ant-design/icons";
 
 type UsersFilterProps = {
   onFilterChange: (filterName: string, filterValue: string) => void;
+  children: React.ReactNode;
 };
-const UsersFilter = ({ onFilterChange }: UsersFilterProps) => {
+const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
   return (
     <Card>
       <Row justify="space-between">
@@ -47,9 +48,7 @@ const UsersFilter = ({ onFilterChange }: UsersFilterProps) => {
           </Row>
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "end" }}>
-          <Button type="primary" icon={<PlusOutlined />}>
-            Create users
-          </Button>
+          {children}
         </Col>
       </Row>
     </Card>
