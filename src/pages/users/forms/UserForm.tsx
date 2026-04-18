@@ -22,17 +22,45 @@ const UserForm = () => {
           <Card title="Basic Info">
             <Row gutter={20}>
               <Col span={12}>
-                <Form.Item label="First Name" name="firstName">
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    {
+                      required: true,
+                      message: "First Name is required",
+                    },
+                  ]}
+                >
                   <Input size="large" />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Last Name" name="lastName">
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Last Name is required",
+                    },
+                  ]}
+                >
                   <Input size="large" />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Email Address" name="email">
+                <Form.Item
+                  label="Email Address"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Email Address is required",
+                      type: "email",
+                    },
+                  ]}
+                >
                   <Input size="large" />
                 </Form.Item>
               </Col>
@@ -41,7 +69,16 @@ const UserForm = () => {
           <Card title="Security Info">
             <Row gutter={20}>
               <Col span={12}>
-                <Form.Item label="Password" name="password">
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Password is required",
+                    },
+                  ]}
+                >
                   <Input.Password size="large" type="password" />
                 </Form.Item>
               </Col>
@@ -50,7 +87,16 @@ const UserForm = () => {
           <Card title="Roles">
             <Row gutter={20}>
               <Col span={12}>
-                <Form.Item label="Roles" name="role">
+                <Form.Item
+                  label="Roles"
+                  name="role"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Role is required",
+                    },
+                  ]}
+                >
                   <Select
                     size="large"
                     allowClear={true}
@@ -66,7 +112,16 @@ const UserForm = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Restaurant" name="tenantId">
+                <Form.Item
+                  label="Restaurant"
+                  name="tenantId"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Restaurant is required",
+                    },
+                  ]}
+                >
                   {tenants?.map((tenants: Tenants) => (
                     <Select
                       size="large"
