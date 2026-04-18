@@ -10,3 +10,10 @@ export type User = {
   lastName: string;
   createdAt: string;
 };
+
+export type Tenants = {
+  id: string;
+  name: string;
+  address: string;
+  createdAt: string;
+};

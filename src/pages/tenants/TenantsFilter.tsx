@@ -4,7 +4,7 @@ type UsersFilterProps = {
   onFilterChange: (filterName: string, filterValue: string) => void;
   children: React.ReactNode;
 };
-const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
+const TenantsFilter = ({ onFilterChange, children }: UsersFilterProps) => {
   return (
     <Card>
       <Row justify="space-between">
@@ -13,7 +13,7 @@ const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
             <Col>
               <Input.Search
                 allowClear={true}
-                placeholder="Search users..."
+                placeholder="Search restaurants..."
                 onChange={(e) => onFilterChange("searchFilter", e.target.value)}
               />
             </Col>
@@ -21,12 +21,12 @@ const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
               <Select
                 allowClear={true}
                 onChange={(value) => onFilterChange("roleFilter", value || "")}
-                placeholder="Select role"
+                placeholder="Category"
                 style={{ width: "100%" }}
                 options={[
-                  { value: "admin", label: "Admin" },
-                  { value: "manager", label: "Manager" },
-                  { value: "customer", label: "Customer" },
+                  { value: "margherita", label: "Margherita" },
+                  { value: "pepperoni", label: "Pepperoni" },
+                  { value: "veggie", label: "Veggie" },
                 ]}
               />
             </Col>
@@ -54,4 +54,4 @@ const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
   );
 };
 
-export default UsersFilter;
+export default TenantsFilter;
