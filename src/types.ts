@@ -12,8 +12,7 @@ export type User = {
 };
 
 export type Tenants = {
-  id: string;
+  id: number;
   name: string;
   address: string;
-  createdAt: string;
 };
