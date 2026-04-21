@@ -128,16 +128,17 @@ const UserForm = () => {
                     },
                   ]}
                 >
-                  {tenants?.map((tenants: Tenants) => (
-                    <Select
-                      size="large"
-                      allowClear={true}
-                      onChange={() => {}}
-                      placeholder="Select restaurant"
-                      style={{ width: "100%" }}
-                      options={[{ value: tenants.id, label: tenants.name }]}
-                    />
-                  ))}
+                  <Select
+                    size="large"
+                    allowClear={true}
+                    onChange={() => {}}
+                    placeholder="Select restaurant"
+                    style={{ width: "100%" }}
+                    options={tenants?.map((tenant: Tenants) => ({
+                      value: tenant.id,
+                      label: tenant.name,
+                    }))}
+                  />
                 </Form.Item>
               </Col>
             </Row>
