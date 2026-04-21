@@ -104,7 +104,6 @@ const UserForm = () => {
                   ]}
                 >
                   <Select
-                    key={tenants.id}
                     size="large"
                     allowClear={true}
                     onChange={() => {}}
