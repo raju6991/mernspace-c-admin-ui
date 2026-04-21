@@ -2,6 +2,8 @@ import { Card, Col, Form, Input, Row, Select, Space } from "antd";
 import { getTenants } from "../../../http/api";
 import { useQuery } from "@tanstack/react-query";
 import type { Tenants } from "../../../types";
+import { useAuthStore } from "../../../store";
+import { Navigate } from "react-router-dom";
 
 const UserForm = () => {
   const { data: tenants } = useQuery({
@@ -15,6 +17,10 @@ const UserForm = () => {
       return data?.tenants ?? [];
     },
   });
+  const { user } = useAuthStore();
+  if (user?.role !== "admin") {
+    return <Navigate to="/" />;
+  }
   return (
     <Row>
       <Col span={24}>
@@ -98,6 +104,7 @@ const UserForm = () => {
                   ]}
                 >
                   <Select
+                    key={tenants.id}
                     size="large"
                     allowClear={true}
                     onChange={() => {}}
