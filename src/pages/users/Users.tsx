@@ -57,7 +57,6 @@ const columns = [
 
 const Users = () => {
   const [form] = Form.useForm();
-  const [formFilter] = Form.useForm();
   const queryClient = new QueryClient();
   const {
     token: { colorBgLayout },
@@ -81,10 +80,12 @@ const Users = () => {
     queryKey: ["users", queryParams],
     queryFn: () => {
       const filteredParams = Object.fromEntries(
-        Object.entries(queryParams).filter(([, value]) => value !== '' && value != null)
+        Object.entries(queryParams).filter(
+          ([, value]) => value !== "" && value != null,
+        ),
       );
       const queryString = new URLSearchParams(
-        Object.entries(filteredParams).map(([k, v]) => [k, String(v)])
+        Object.entries(filteredParams).map(([k, v]) => [k, String(v)]),
       ).toString();
       return getUsers(queryString).then((res) => res.data);
     },
@@ -106,15 +107,15 @@ const Users = () => {
     form.resetFields();
     setDrawerOpen(false);
   };
-  const onFilterChange = () => {
-    const { q, role } = formFilter.getFieldsValue();
-    setQueryParams((prev) => ({
-      ...prev,
-      q: q || '',
-      role: role || '',
-      currentPage: 1,
-    }));
+
+  const onSearch = (value: string) => {
+    setQueryParams((prev) => ({ ...prev, q: value, currentPage: 1 }));
   };
+
+  const onRoleChange = (role: string) => {
+    setQueryParams((prev) => ({ ...prev, role, currentPage: 1 }));
+  };
+
   const { user } = useAuthStore();
   if (user?.role !== "admin") {
     return <Navigate to="/" />;
@@ -138,17 +139,15 @@ const Users = () => {
             <Typography.Text type="danger">{error.message}</Typography.Text>
           )}
         </Flex>
-        <Form form={formFilter} onFieldsChange={onFilterChange}>
-          <UsersFilter>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => setDrawerOpen(true)}
-            >
-              Create users
-            </Button>
-          </UsersFilter>
-        </Form>
+        <UsersFilter onSearch={onSearch} onRoleChange={onRoleChange}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => setDrawerOpen(true)}
+          >
+            Create users
+          </Button>
+        </UsersFilter>
         <Table
           pagination={{
             total: users?.total,

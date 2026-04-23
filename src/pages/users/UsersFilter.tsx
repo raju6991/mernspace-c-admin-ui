@@ -1,47 +1,43 @@
-import { Card, Col, Form, Input, Row, Select } from "antd";
+import { Card, Col, Input, Row, Select } from "antd";
+import debounce from "lodash/debounce";
 
 type UsersFilterProps = {
   children: React.ReactNode;
+  onSearch: (value: string) => void;
+  onRoleChange: (role: string) => void;
 };
-const UsersFilter = ({ children }: UsersFilterProps) => {
+const UsersFilter = ({
+  children,
+  onSearch,
+  onRoleChange,
+}: UsersFilterProps) => {
+  const debouncedSearch = debounce(onSearch, 1000);
+
   return (
     <Card>
       <Row justify="space-between">
         <Col span={16}>
           <Row gutter={20}>
             <Col>
-              <Form.Item name="q">
-                <Input.Search allowClear={true} placeholder="Search users..." />
-              </Form.Item>
+              <Input.Search
+                allowClear={true}
+                placeholder="Search users..."
+                onChange={(e) => debouncedSearch(e.target.value)}
+              />
             </Col>
             <Col span={8}>
-              <Form.Item name="role">
-                <Select
-                  allowClear={true}
-                  placeholder="Select role"
-                  style={{ width: "100%" }}
-                  options={[
-                    { value: "admin", label: "Admin" },
-                    { value: "manager", label: "Manager" },
-                    { value: "customer", label: "Customer" },
-                  ]}
-                />
-              </Form.Item>
-            </Col>
-            {/* <Col span={8}>
               <Select
-                onChange={(value) =>
-                  onFilterChange("statusFilter", value || "")
-                }
                 allowClear={true}
-                placeholder="Select status"
+                placeholder="Select role"
                 style={{ width: "100%" }}
+                onChange={(value) => onRoleChange(value || "")}
                 options={[
-                  { value: "banned", label: "Ban" },
-                  { value: "active", label: "Active" },
+                  { value: "admin", label: "Admin" },
+                  { value: "manager", label: "Manager" },
+                  { value: "customer", label: "Customer" },
                 ]}
               />
-            </Col> */}
+            </Col>
           </Row>
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "end" }}>
