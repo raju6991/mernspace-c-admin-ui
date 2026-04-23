@@ -57,6 +57,7 @@ const columns = [
 
 const Users = () => {
   const [form] = Form.useForm();
+  const [formFilter] = Form.useForm();
   const queryClient = new QueryClient();
   const {
     token: { colorBgLayout },
@@ -65,6 +66,8 @@ const Users = () => {
   const [queryParams, setQueryParams] = useState({
     perPage: PER_PAGE,
     currentPage: 1,
+    q: "",
+    role: "",
   });
 
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -75,13 +78,14 @@ const Users = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["users", queryParams.currentPage, queryParams.perPage],
+    queryKey: ["users", queryParams],
     queryFn: () => {
-      const queryString = new URLSearchParams({
-        perPage: String(queryParams.perPage),
-        currentPage: String(queryParams.currentPage),
-      }).toString();
-
+      const filteredParams = Object.fromEntries(
+        Object.entries(queryParams).filter(([, value]) => value !== '' && value != null)
+      );
+      const queryString = new URLSearchParams(
+        Object.entries(filteredParams).map(([k, v]) => [k, String(v)])
+      ).toString();
       return getUsers(queryString).then((res) => res.data);
     },
     placeholderData: keepPreviousData,
@@ -101,6 +105,15 @@ const Users = () => {
     await userMutate(form.getFieldsValue() as CreateUserData);
     form.resetFields();
     setDrawerOpen(false);
+  };
+  const onFilterChange = () => {
+    const { q, role } = formFilter.getFieldsValue();
+    setQueryParams((prev) => ({
+      ...prev,
+      q: q || '',
+      role: role || '',
+      currentPage: 1,
+    }));
   };
   const { user } = useAuthStore();
   if (user?.role !== "admin") {
@@ -125,19 +138,17 @@ const Users = () => {
             <Typography.Text type="danger">{error.message}</Typography.Text>
           )}
         </Flex>
-        <UsersFilter
-          onFilterChange={(filterName: string, filterValue: string) => {
-            console.log(filterName, filterValue);
-          }}
-        >
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => setDrawerOpen(true)}
-          >
-            Create users
-          </Button>
-        </UsersFilter>
+        <Form form={formFilter} onFieldsChange={onFilterChange}>
+          <UsersFilter>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => setDrawerOpen(true)}
+            >
+              Create users
+            </Button>
+          </UsersFilter>
+        </Form>
         <Table
           pagination={{
             total: users?.total,

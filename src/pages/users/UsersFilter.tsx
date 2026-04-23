@@ -1,36 +1,34 @@
-import { Card, Col, Input, Row, Select } from "antd";
+import { Card, Col, Form, Input, Row, Select } from "antd";
 
 type UsersFilterProps = {
-  onFilterChange: (filterName: string, filterValue: string) => void;
   children: React.ReactNode;
 };
-const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
+const UsersFilter = ({ children }: UsersFilterProps) => {
   return (
     <Card>
       <Row justify="space-between">
         <Col span={16}>
           <Row gutter={20}>
             <Col>
-              <Input.Search
-                allowClear={true}
-                placeholder="Search users..."
-                onChange={(e) => onFilterChange("searchFilter", e.target.value)}
-              />
+              <Form.Item name="q">
+                <Input.Search allowClear={true} placeholder="Search users..." />
+              </Form.Item>
             </Col>
             <Col span={8}>
-              <Select
-                allowClear={true}
-                onChange={(value) => onFilterChange("roleFilter", value || "")}
-                placeholder="Select role"
-                style={{ width: "100%" }}
-                options={[
-                  { value: "admin", label: "Admin" },
-                  { value: "manager", label: "Manager" },
-                  { value: "customer", label: "Customer" },
-                ]}
-              />
+              <Form.Item name="role">
+                <Select
+                  allowClear={true}
+                  placeholder="Select role"
+                  style={{ width: "100%" }}
+                  options={[
+                    { value: "admin", label: "Admin" },
+                    { value: "manager", label: "Manager" },
+                    { value: "customer", label: "Customer" },
+                  ]}
+                />
+              </Form.Item>
             </Col>
-            <Col span={8}>
+            {/* <Col span={8}>
               <Select
                 onChange={(value) =>
                   onFilterChange("statusFilter", value || "")
@@ -43,7 +41,7 @@ const UsersFilter = ({ onFilterChange, children }: UsersFilterProps) => {
                   { value: "active", label: "Active" },
                 ]}
               />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "end" }}>

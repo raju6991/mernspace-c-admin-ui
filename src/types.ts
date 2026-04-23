@@ -8,6 +8,7 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
+  role: string;
   createdAt: string;
 };
 
@@ -25,7 +26,12 @@ export type Tenants = {
   address: string;
 };
 
-export type CreateTenantData = {
+export type FieldData = {
   name: string;
+  value?: string;
+};
+
+export type CreateTenantData = {
+  name: string[];
   address: string;
 };

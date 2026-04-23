@@ -8,7 +8,7 @@ import TenantsFilter from "./TenantsFilter";
 import TenantForm from "./forms/tenantForm";
 import { useAuthStore } from "../../store";
 import type { CreateTenantData } from "../../types";
-import create from "@ant-design/icons/lib/components/IconFont";
+
 const columns = [
   {
     title: "ID",
