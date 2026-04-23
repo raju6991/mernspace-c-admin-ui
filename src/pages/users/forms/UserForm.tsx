@@ -4,8 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import type { Tenants } from "../../../types";
 import { useAuthStore } from "../../../store";
 import { Navigate } from "react-router-dom";
+import { useState } from "react";
 
 const UserForm = () => {
+  const [selectedRole, setSelectedRole] = useState<string>("");
   const { data: tenants } = useQuery({
     queryKey: ["tenants"],
     queryFn: async () => {
@@ -106,7 +108,7 @@ const UserForm = () => {
                   <Select
                     size="large"
                     allowClear={true}
-                    onChange={() => {}}
+                    onChange={(value) => setSelectedRole(value || "")}
                     placeholder="Select role"
                     style={{ width: "100%" }}
                     options={[
@@ -117,30 +119,31 @@ const UserForm = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Restaurant"
-                  name="tenantId"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Restaurant is required",
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    allowClear={true}
-                    onChange={() => {}}
-                    placeholder="Select restaurant"
-                    style={{ width: "100%" }}
-                    options={tenants?.map((tenant: Tenants) => ({
-                      value: tenant.id,
-                      label: tenant.name,
-                    }))}
-                  />
-                </Form.Item>
-              </Col>
+              {selectedRole !== "admin" && (
+                <Col span={12}>
+                  <Form.Item
+                    label="Restaurant"
+                    name="tenantId"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Restaurant is required",
+                      },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      allowClear={true}
+                      placeholder="Select restaurant"
+                      style={{ width: "100%" }}
+                      options={tenants?.map((tenant: Tenants) => ({
+                        value: tenant.id,
+                        label: tenant.name,
+                      }))}
+                    />
+                  </Form.Item>
+                </Col>
+              )}
             </Row>
           </Card>
         </Space>
