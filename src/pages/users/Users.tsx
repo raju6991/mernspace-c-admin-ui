@@ -152,7 +152,7 @@ const Users = () => {
             },
           }}
           columns={columns}
-          dataSource={users?.users}
+          dataSource={users?.data}
           rowKey="id"
         />
         <Drawer
